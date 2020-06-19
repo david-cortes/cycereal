@@ -17,6 +17,24 @@ def get_cereal_include_dir():
     elif os.path.exists(os.path.join(sys.prefix, append_path)):
         return os.path.join(sys.prefix, "include")
 
-    ## if the header file doesn't exist, shall raise en error
+    ## in PEP518 environments, files will be under a temporary folder
     else:
-        raise ValueError("Could not find header files from 'cycereal' - please try reinstalling with 'pip install --force cycereal'")
+        candidate_paths = [sys.prefix]
+        try:
+            candidate_paths.append(os.environ['PYTHONPATH'])
+        except:
+            pass
+        if sys.platform[:3] == "win":
+            candidate_paths += os.environ['PATH'].split(";")
+        else:
+            candidate_paths += os.environ['PATH'].split(":")
+
+        for path in candidate_paths:
+            if bool(re.search(r"[Oo]verlay", path)):
+                clean_path = re.sub(r"^(.*[Oo]verlay).*$", r"\1", path)
+                if os.path.exists( os.path.join(clean_path, append_path) ):
+                    return os.path.join(clean_path, "include")
+
+        ## if the header file doesn't exist, shall raise en error
+        else:
+            raise ValueError("Could not find header files from 'cycereal' - please try reinstalling with 'pip install --force cycereal'")

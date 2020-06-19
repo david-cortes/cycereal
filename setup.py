@@ -29,7 +29,7 @@ def get_all_files_in_folder():
 setup(
   name = 'cycereal',
   packages = ['cycereal'],
-  version = '0.1.0',
+  version = '0.1.3',
   author = 'David Cortes',
   author_email = 'david.cortes.rivera@gmail.com',
   url = 'https://github.com/david-cortes/cycereal',

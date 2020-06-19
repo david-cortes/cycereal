@@ -1,0 +1,23 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+.directory
+MANIFEST
+
+
+# dist files
+dist/
+*.zip
+*.tar.gz
+
+# compiled code
+*.so
+*.o
+*.lib
+*.obj
+*.dynlib
+*.pyd
+*.dll
+
+cycereal.egg-info/*
+test/*
