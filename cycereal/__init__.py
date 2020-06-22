@@ -35,6 +35,24 @@ def get_cereal_include_dir():
                 if os.path.exists( os.path.join(clean_path, append_path) ):
                     return os.path.join(clean_path, "include")
 
+        ## if still not found, try to get it from pip itself
+        import pip
+        import io
+        from contextlib import redirect_stdout
+        pip_outp = io.StringIO()
+        with redirect_stdout(pip_outp):
+            pip.main(['show', '-f', 'cycereal'])
+        pip_outp = pip_outp.getvalue()
+        pip_outp = pip_outp.split("\n")
+        for ln in pip_outp:
+            if bool(re.search(r"^Location", ln)):
+                files_root = re.sub(r"^Location:\s+", "", ln)
+                break
+        for ln in pip_outp:
+            if bool(re.search(r"\.hpp$", ln)):
+                files_root = os.path.join(files_root, re.sub(r"^\s*(.*include)[/\\]+cereal.*\.hpp$", r"\1", ln))
+                return files_root
+
         ## if the header file doesn't exist, shall raise en error
         else:
             raise ValueError("Could not find header files from 'cycereal' - please try reinstalling with 'pip install --force cycereal'")

@@ -12,7 +12,7 @@ def get_all_files_in_folder():
             all_files.append( (path, name) )
 
     for i in range(len(all_files)):
-        all_files[i] = re.sub(r"^.*(include/cereal.*)$", r"\1", all_files[i][0]), all_files[i][1]
+        all_files[i] = re.sub(r"^.*(include[/\\]+cereal.*)$", r"\1", all_files[i][0]), all_files[i][1]
 
     all_files_dct = dict()
     for path, file in all_files:
@@ -29,7 +29,7 @@ def get_all_files_in_folder():
 setup(
   name = 'cycereal',
   packages = ['cycereal'],
-  version = '0.1.3',
+  version = '0.1.4',
   author = 'David Cortes',
   author_email = 'david.cortes.rivera@gmail.com',
   url = 'https://github.com/david-cortes/cycereal',
