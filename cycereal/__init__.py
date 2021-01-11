@@ -40,8 +40,14 @@ def get_cereal_include_dir():
         import io
         from contextlib import redirect_stdout
         pip_outp = io.StringIO()
-        with redirect_stdout(pip_outp):
-            pip.main(['show', '-f', 'cycereal'])
+        try:
+            with redirect_stdout(pip_outp):
+                pip.main(['show', '-f', 'cycereal'])
+        except:
+            from pip._internal import main as pip_main
+            with redirect_stdout(pip_outp):
+                pip_main(['show', '-f', 'cycereal'])
+
         pip_outp = pip_outp.getvalue()
         pip_outp = pip_outp.split("\n")
         for ln in pip_outp:
