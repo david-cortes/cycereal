@@ -43,7 +43,7 @@ def get_cereal_include_dir():
         try:
             with redirect_stdout(pip_outp):
                 pip.main(['show', '-f', 'cycereal'])
-        except:
+        except Exception:
             from pip._internal import main as pip_main
             with redirect_stdout(pip_outp):
                 pip_main(['show', '-f', 'cycereal'])
