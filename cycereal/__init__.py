@@ -22,7 +22,7 @@ def get_cereal_include_dir():
         candidate_paths = [sys.prefix]
         try:
             candidate_paths.append(os.environ['PYTHONPATH'])
-        except:
+        except Exception:
             pass
         if sys.platform[:3] == "win":
             candidate_paths += os.environ['PATH'].split(";")
